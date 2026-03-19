@@ -1,1 +1,33 @@
-...
+using System.Collections.Generic;
+
+namespace Composite
+{
+    //publico y abstracto para el componente base
+    public abstract class Componente
+    {
+        //variables para el nombre
+        string _nombre;
+
+        //uso de constructor para el nombre del componente
+        public Componente(string nombre)
+        {
+            _nombre = nombre;
+        }
+
+        //obtiene el nombre
+        public string Nombre
+        {
+            get { return _nombre; }
+        }
+
+        //declaracion de métodos
+        //permite agregar un hijo 
+        public abstract void AgregaHijo(Componente c);
+        //crea una lista para recorrer el arbol y obtener los hijos
+        public abstract IList<Componente> ObtenerHijos();
+        //para el total del precio
+        public abstract int ObtenerPrecio { get; }
+        //para la descripción
+        public abstract string ObtenerDescrip { get; }
+    }
+}
