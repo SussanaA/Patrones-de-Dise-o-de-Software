@@ -1,1 +1,60 @@
-...
+using System.Collections.Generic;
+
+namespace Composite
+{
+    //representa una hoja
+    internal class Elemento : Componente
+    {
+        int _precio;
+        string _descripcion;
+
+        //constructor que inicializa nombre, precio y descripcion
+        public Elemento(string nombre, int precio, string descripcion) : base(nombre)
+        {
+            _precio = precio;
+            _descripcion = descripcion;
+        }
+
+        //devuelve el precio del elemento
+        public int Precio
+        {
+            get
+            {
+                return _precio;
+            }
+        }
+
+        //retorna la descripción del elemento
+        public string Descripcion
+        {
+            get
+            {
+                return _descripcion;
+            }
+        }
+
+        //no se agregan hijos ya que las hojas no pueden contener hijos
+        public override void AgregaHijo(Componente c)
+        {
+            
+        }
+
+        //regresar nulo en las hojas porque no contienen hijos
+        public override IList<Componente> ObtenerHijos()
+        {
+            return null;
+        }
+
+        //de la clase base devuelve el precio
+        public override int ObtenerPrecio
+        {
+            get { return _precio; }
+        }
+
+        //de la clase base devuelve la descripción
+        public override string ObtenerDescrip
+        {
+            get { return _descripcion; }
+        }
+    }
+}
