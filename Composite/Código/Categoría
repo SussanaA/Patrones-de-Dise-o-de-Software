@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Composite
 {
-    //hereda del componente
+    //hereda del componente y representa un nodo compuesto
     public class Categoria : Componente
     {
         //lista de componentes de hijos
