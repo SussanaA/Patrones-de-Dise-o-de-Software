@@ -1,1 +1,59 @@
----
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Composite
+{
+    //hereda del componente
+    public class Categoria : Componente
+    {
+        //lista de componentes de hijos
+        private IList<Componente> _hijos;
+
+        //constructor
+        public Categoria(string nombre) : base(nombre)
+        {
+            _hijos = new List<Componente>();
+        }
+
+        //sobrescribir
+        public override void AgregaHijo(Componente c)
+        {
+            //permite agregar a la categoría
+            _hijos.Add(c);
+        }
+        
+        //devuelve una copia de los elementos de la lista
+        public override IList<Componente> ObtenerHijos()
+        {
+            return _hijos.ToArray();
+        }
+
+        //acumula el precio
+        public override int ObtenerPrecio
+        {
+            get
+            {
+                int p = 0;
+                foreach (var item in _hijos)
+                {
+                    p += item.ObtenerPrecio;
+                }
+                return p;
+            }
+        }
+
+        //concatena las descripciones
+        public override string ObtenerDescrip
+        {
+            get
+            {
+                string d = "";
+                foreach (var item in _hijos)
+                {
+                    d += item.ObtenerDescrip + "\n";
+                }
+                return d;
+            }
+        }
+    }
+}
