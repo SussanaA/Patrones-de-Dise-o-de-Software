@@ -1,1 +1,157 @@
-..
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Composite
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //crear los elementos
+            Componente root = new Categoria("Raiz");
+            //gama alta
+            Componente teclado_1 = new Elemento("Teclado mecánico RGB", 2000, "Alta presición, iluminación y durabilidad.");
+            Componente teclado_2 = new Elemento("Teclado gamer compacto", 1800, "Diseño profesional para el gaming.");
+            Componente mouse_1 = new Elemento("Mouse gamer RGB", 1200, "Alta presición, DPI ajustable.");
+            Componente mouse_2 = new Elemento("Mouse profesional inalámbrico", 1500, "Presición avanzada.");
+            Componente monitor_1 = new Elemento("Monitor 27\" 144Hz", 7000, "Alta tasa de refresco.");
+            Componente monitor_2 = new Elemento("Monitor curvo", 8000, "Mayor inmersión visual.");
+            Componente cpu_1 = new Elemento("Gamer", 12000, "Equipo de alto rendimiento para juegos y diseño");
+            
+            //gama media
+            Componente teclado_3 = new Elemento("Teclado semi mecánico", 800, "Mejor respuesta al escribir.");
+            Componente teclado_4 = new Elemento("Teclado inalámbrico ergonómico", 900, "Diseño cómodo para largas jornadas.");
+            Componente mouse_3 = new Elemento("Mouse ergonómico", 400, "Diseño cómodo para uso prolongado.");
+            Componente mouse_4 = new Elemento("Mouse gamer básico", 600, "Mayor precisión y botones adicionales.");
+            Componente monitor_3 = new Elemento("Monitor 24\" FULL HD", 3000, "Pantalla amplia con buena calidad.");
+            Componente monitor_4 = new Elemento("Monitor IPS", 3500, "Colores más vivos y mejor ángulo de visión.");
+            Componente cpu_3 = new Elemento("Estudio y multitarea", 9000, "Capaz de ejecutar varias aplicaciones al mismo tiempo.");
+            
+            //gama basica
+            Componente teclado_5 = new Elemento("Teclado estándar", 200, "Teclado básico de membrana.");
+            Componente teclado_6 = new Elemento("Teclado slim compacto", 250, "Diseño delgado y silencioso.");
+            Componente mouse_5 = new Elemento("Mouse óptico USB", 150, "Mouse básico con sensor óptico.");
+            Componente mouse_6 = new Elemento("Mouse inalámbrico", 250, "Mouse cómodo sin cables.");
+            Componente monitor_5 = new Elemento("Monitor 19\" HD", 1500, "Pantalla básica.");
+            Componente monitor_6 = new Elemento("Monitor 22\" HD", 2000, "Mejor resolución.");
+            Componente cpu_5 = new Elemento("Navegación y documentos", 6000, "Equipo para tareas básicas.");
+
+            
+
+
+            //paquetes o gamas
+            Componente alta = new Categoria("Gama alta");
+            Componente media = new Categoria("Gama media");
+            Componente basica = new Categoria("Gama básica");
+
+            //asignar elementos a categoría
+            //alta
+            alta.AgregaHijo(teclado_1);
+            alta.AgregaHijo(teclado_2);
+            alta.AgregaHijo(mouse_1);
+            alta.AgregaHijo(mouse_2);
+            alta.AgregaHijo(monitor_1);
+            alta.AgregaHijo(monitor_2);
+            alta.AgregaHijo(cpu_1);
+            //media
+            media.AgregaHijo(teclado_3);
+            media.AgregaHijo(teclado_4);
+            media.AgregaHijo(mouse_3);
+            media.AgregaHijo(mouse_4);
+            media.AgregaHijo(monitor_3);
+            media.AgregaHijo(monitor_4);
+            media.AgregaHijo(cpu_3);
+
+            //basica
+            basica.AgregaHijo(teclado_5);
+            basica.AgregaHijo(teclado_6);
+            basica.AgregaHijo(mouse_5);
+            basica.AgregaHijo(mouse_6);
+            basica.AgregaHijo(monitor_5);
+            basica.AgregaHijo(monitor_6);
+            basica.AgregaHijo(cpu_5);
+
+
+            //asignar la categoria a la raiz
+            root.AgregaHijo(alta);
+            root.AgregaHijo(media);
+            root.AgregaHijo(basica);
+
+
+            //menu
+            OP(root);
+        }
+
+        //método que va a tomar la raíz y mostrar las categorias
+        public static void OP(Componente root)
+        {
+            //llamada a los hijos de la reiz que son las gamas
+            var categorias = root.ObtenerHijos();
+
+            //lista de opciones del menú
+            //enumerar las opciones
+            int g = 1;
+
+            //titulo para las opciones
+            Console.WriteLine("Gamas disponibles:");
+            //recorre la lista
+            foreach (var cat in categorias)
+            {
+                //muestra el nombre de cada elemento de las categorías
+                Console.WriteLine(g + "- " + cat.Nombre);
+                g++; //incremento para el siguiente # de opcion
+            }
+            Console.WriteLine("4. Salir");
+
+            //se muestran los productos
+            Console.Write("Elige una categoría: ");
+            int p = int.Parse(Console.ReadLine());
+            //verifica que sea una opcion valida
+            if (p > 0 && p <= categorias.Count)
+            {
+                elementoos(categorias[ p - 1]);
+            }
+        }
+
+        //método para mostrar los elementos de acuerdo a su categoria
+        public static void elementoos(Componente categoria)
+        {
+            //llama a los elementos de la categoria
+            var elementos = categoria.ObtenerHijos();
+
+            //mostrar la categoria
+            Console.WriteLine($"\n\nProductos de la categoría {categoria.Nombre}: " );
+
+            //muestra el nombre de la categoria
+            int op = 1;
+            //recorre la lista
+            foreach (var e in elementos)
+            {
+                //muestra el nombre de cada elemento de las categorías
+                Console.WriteLine(op + "- " + e.Nombre);
+                op++; //incremento para el siguiente # de opcion
+            }
+            Console.WriteLine("5. Salir");
+
+            //el usuario elige un producto
+            Console.Write("Elija un producto: ");
+            int p = int.Parse(Console.ReadLine());
+
+            //verifica que exista
+            if (p > 0 && p <= elementos.Count)
+            {
+                var e = elementos[p - 1];
+
+                Console.WriteLine($"Nombre: {e.Nombre}");
+                Console.WriteLine($"Descripción: {e.ObtenerDescrip}");
+                Console.WriteLine($"Precio: ${e.ObtenerPrecio}");
+
+                Console.WriteLine("\nPresiona para reelegir");
+                Console.ReadKey();
+            }
+        }
+    }
+}
